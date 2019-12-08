@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AssemblyName>Codes</AssemblyName>
+    <RootNamespace>Codes</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="day1\" />
+  </ItemGroup>
+</Project>
