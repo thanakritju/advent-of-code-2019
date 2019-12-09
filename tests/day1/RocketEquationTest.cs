@@ -19,5 +19,32 @@ namespace tests.day1
 
             Assert.AreEqual(2, fuel);
         }
+        
+        [Test]
+        public void TestFuelRecursive()
+        {
+            var mass = 100756;
+
+            var fuel = RocketEquation.FuelRecursive(mass);
+
+            Assert.AreEqual(50346, fuel);
+        }
+        
+        [Test]
+        public void TestPart1()
+        {
+            var fuels = RocketEquation.SolvePart1();
+
+            Assert.AreEqual(3266516, fuels);
+        }
+        
+        [Test]
+        public void TestPart2()
+        {
+            var fuels = RocketEquation.SolvePart2();
+
+            Assert.AreEqual(4896902, fuels);
+        }
+        
     }
 }
