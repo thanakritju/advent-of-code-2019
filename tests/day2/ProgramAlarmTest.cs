@@ -20,5 +20,24 @@ namespace Tests.day2
 
             Assert.AreEqual(expectedProgram, outputProgram);
         }
+        
+        
+        [Test]
+        public void TestPart1()
+        {
+            var output = ProgramAlarm.SolvePart1(12, 2);
+
+            Assert.AreEqual(7210630, output);
+        }
+        
+        [Test]
+        public void TestPart2()
+        {
+            var target = 19690720;
+            
+            var output = ProgramAlarm.SolvePart2(target);
+
+            Assert.AreEqual(3892, output);
+        }
     }
 }
