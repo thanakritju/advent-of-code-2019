@@ -1,9 +1,9 @@
 using Codes.day1;
 using NUnit.Framework;
 
-namespace tests.day1
+namespace Tests.day1
 {
-    public class Tests
+    public class RocketEquationTests
     {
         [SetUp]
         public void Setup()
