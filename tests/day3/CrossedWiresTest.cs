@@ -1,3 +1,4 @@
+using System;
 using Codes.day3;
 using NUnit.Framework;
 
@@ -10,19 +11,39 @@ namespace Tests.day3
         {
         }
 
-        [TestCase(new[]{1, 1, 4, 1, 2, 2, 2, 0}, true)]
-        [TestCase(new[]{1, 1, 4, 1, 5, 2, 5, 0}, false)]
-        [TestCase(new[]{1, 1, 4, 1, 4, 2, 4, 1}, true)]
-        public void TestIsIntersect(int[] points, bool expected)
+        [TestCase(new[]{1, 1, 4, 1, 2, 2, 2, 0}, new[]{2, 1})]
+        [TestCase(new[]{1, 3, 1, 7, 0, 5, 2, 5}, new[]{1, 5})]
+        [TestCase(new[]{1, -3, 1, -7, 0, -5, 2, -5}, new[]{1, -5})]
+        [TestCase(new[]{1, 1, 4, 1, 4, 2, 4, 1}, new[]{4, 1})]
+        public void TestGetIntersect(int[] points, int[] expected)
         {
             var p1 = new Point(points[0], points[1]);
             var p2 = new Point(points[2], points[3]);
             var p3 = new Point(points[4], points[5]);
             var p4 = new Point(points[6], points[7]);
-
-            var isIntersect = CrossedWires.IsIntersect(p1, p2, p3, p4);
+            var line1 = new Line(p1, p2);
+            var line2 = new Line(p3, p4);
             
-            Assert.AreEqual(expected, isIntersect);
+            var intersect = line1.IntersectWith(line2);
+            
+            Assert.AreEqual(expected[0], intersect.X);
+            Assert.AreEqual(expected[1], intersect.Y);
+        }
+        
+        [TestCase(new[]{1, 1, 4, 1, 5, 2, 5, 0})]
+        [TestCase(new[]{1, 3, 1, 7, 0, 2, 2, 2})]
+        [TestCase(new[]{-1, 1, -4, 1, -5, 2, -5, 0})]
+        [TestCase(new[]{0, 0, 4, 0, 3, 4, 3, 3})]
+        public void TestGetIntersectThrowException(int[] points)
+        {
+            var p1 = new Point(points[0], points[1]);
+            var p2 = new Point(points[2], points[3]);
+            var p3 = new Point(points[4], points[5]);
+            var p4 = new Point(points[6], points[7]);
+            var line1 = new Line(p1, p2);
+            var line2 = new Line(p3, p4);
+
+            Assert.Throws<Exception>(() => line1.IntersectWith(line2));
         }
 
         [TestCase(new[] {"R8","U5","L5","D3"}, new[] {"U7","R6","D4","L4"}, 6)]
@@ -41,7 +62,6 @@ namespace Tests.day3
             Assert.AreEqual(expected, distance);
         }
         
-        [Ignore("Last time ran with 7 minutes LUL")]
         [Test]
         public void TestPart1()
         {

@@ -27,27 +27,27 @@ namespace Codes.day3
             foreach (var command in wire2)
             {
                 var end = _Move(start, command);
-                var line = new Line(start, end);
-                foreach (var firstLine in lines)
+                var tmpLine = new Line(start, end);
+                foreach (var line in lines)
                 {
                     try
                     {
-                        var intersect = GetIntersect(line.P1, line.P2, firstLine.P1, firstLine.P2);
-                        distances.Add(intersect.GetDistanceFromOrigin());
+                        var point = line.IntersectWith(tmpLine);
+                        
+                        distances.Add(point.GetDistanceFromOrigin());
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        // Ignore
+                        Console.WriteLine(e);
                     }
                 }
                 start = end;
             }
-
+            
             distances.Remove(0);
 
             return distances.Min();
         }
-
         private static Point _Move(Point start, string command)
         {
             var m = new Regex("(R|D|U|L)(\\d+)").Match(command);
@@ -72,39 +72,6 @@ namespace Codes.day3
 
             throw new Exception("Unknown command");
         }
-        
-        public static bool IsIntersect(Point p1, Point p2, Point p3, Point p4)
-        {
-            try
-            {
-                GetIntersect(p1, p2, p3, p4);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public static Point GetIntersect(Point p1, Point p2, Point p3, Point p4)
-        {
-            var line1 = new Line(p1, p2);
-            var line2 = new Line(p3, p4);
-            var set1 = line1.GetAllPoints();
-            var set2 = line2.GetAllPoints();
-
-            foreach (var pi in set1)
-            {
-                foreach (var pj in set2)
-                {
-                    if (pi.X == pj.X && pi.Y == pj.Y)
-                    {
-                        return new Point(pi.X, pi.Y);
-                    }
-                }
-            }
-            throw new Exception("Not intersect");
-        }
 
         public static int SolvePart1()
         {
@@ -118,6 +85,7 @@ namespace Codes.day3
             throw new System.NotImplementedException();
         }
 
+
         private static Tuple<string[], string[]> _GetWires()
         {
             var fileContent = File.ReadAllText(@"../../../../codes/day3/wires.txt");
@@ -129,6 +97,11 @@ namespace Codes.day3
             var secondWire = wires[1].Split(",", StringSplitOptions.RemoveEmptyEntries);
 
             return Tuple.Create(firstWire, secondWire);
+        }
+
+        public static bool IsIntersect(Point p1, Point p2, Point p3, Point p4)
+        {
+            throw new NotImplementedException();
         }
     }
 }

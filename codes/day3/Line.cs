@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 
 namespace Codes.day3
 {
@@ -20,16 +21,35 @@ namespace Codes.day3
             return (int) Math.Sqrt(point.X * point.X + point.Y + point.Y);
         }
 
-        private bool IsVertical()
+        public bool IsVertical()
         {
             return P1.X == P2.X;
         }
 
-        private bool IsHorizontal()
+        public bool IsHorizontal()
         {
             return P1.Y == P2.Y;
         }
 
+        public Point IntersectWith(Line line)
+        {
+            if (IsHorizontal())
+            {
+                if (line.IsHorizontal() || line.P1.X > Math.Max(P1.X, P2.X) || line.P1.X < Math.Min(P1.X, P2.X)
+                    || P1.Y > Math.Max(line.P1.Y, line.P2.Y) || P1.Y < Math.Min(line.P1.Y, line.P2.Y))
+                {
+                    throw new Exception("Not intersect");
+                }
+                return new Point(line.P1.X, P1.Y);
+            }
+            if (line.IsVertical() || line.P1.Y > Math.Max(P1.Y, P2.Y) || line.P1.Y < Math.Min(P1.Y, P2.Y)
+                || P1.X > Math.Max(line.P1.X, line.P2.X) || P1.X < Math.Min(line.P1.X, line.P2.X))
+            {
+                throw new Exception("Not intersect");
+            }
+            return new Point(P1.X, line.P1.Y);
+        }
+        
         public IEnumerable<Point> GetAllPoints()
         {
             var points = new HashSet<Point>();
