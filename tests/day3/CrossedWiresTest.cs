@@ -52,12 +52,28 @@ namespace Tests.day3
             new[] {"U62","R66","U55","R34","D71","R55","D58","R83"}, 
             159)]
         [TestCase(
-            new[] {"R98","U47","R26","D63","R33","U87","L62","D20","R33","U53","R5"}, 
+            new[] {"R98","U47","R26","D63","R33","U87","L62","D20","R33","U53","R51"}, 
             new[] {"U98","R91","D20","R16","D67","R40","U7","R15","U6","R7"}, 
             135)]
-        public void TestRun(string[] wire1,string[] wire2, int expected)
+        public void TestRunPart1(string[] wire1,string[] wire2, int expected)
         {
-            var distance = CrossedWires.Run(wire1, wire2);
+            var distance = Runner.RunPart1(wire1, wire2);
+
+            Assert.AreEqual(expected, distance);
+        }
+        
+        [TestCase(new[] {"R8","U5","L5","D3"}, new[] {"U7","R6","D4","L4"}, 30)]
+        [TestCase(
+            new[] {"R75","D30","R83","U83","L12","D49","R71","U7","L72"}, 
+            new[] {"U62","R66","U55","R34","D71","R55","D58","R83"}, 
+            610)]
+        [TestCase(
+            new[] {"R98","U47","R26","D63","R33","U87","L62","D20","R33","U53","R51"}, 
+            new[] {"U98","R91","D20","R16","D67","R40","U7","R15","U6","R7"}, 
+            410)]
+        public void TestRunPart2(string[] wire1,string[] wire2, int expected)
+        {
+            var distance = Runner.RunPart2(wire1, wire2);
 
             Assert.AreEqual(expected, distance);
         }
@@ -65,7 +81,7 @@ namespace Tests.day3
         [Test]
         public void TestPart1()
         {
-            var output = CrossedWires.SolvePart1();
+            var output = Runner.SolvePart1();
 
             Assert.AreEqual(5319, output);
         }
@@ -73,7 +89,7 @@ namespace Tests.day3
         [Test]
         public void TestPart2()
         {
-            var output = CrossedWires.SolvePart2();
+            var output = Runner.SolvePart2();
 
             Assert.AreEqual(122514, output);
         }

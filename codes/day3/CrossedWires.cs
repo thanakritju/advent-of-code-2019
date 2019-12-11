@@ -1,54 +1,47 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 namespace Codes.day3
 {
     public class CrossedWires
     {
-        public static int Run(string[] wire1, string[] wire2)
+        public static bool IsInPoints(List<Point> points, Point point)
         {
-            Point start = new Point();
-            var lines = new List<Line>();
-            foreach (var command in wire1)
+            foreach (var p in points)
             {
-                var end = _Move(start, command);
-                lines.Add(new Line(start, end));
-                start = end;
-            }
-            
-            start = new Point();
-            var distances = new List<int>();
-            foreach (var command in wire2)
-            {
-                var end = _Move(start, command);
-                var tmpLine = new Line(start, end);
-                foreach (var line in lines)
+                if (p.X == point.X && p.Y == point.Y)
                 {
-                    try
-                    {
-                        var point = line.IntersectWith(tmpLine);
-                        
-                        distances.Add(point.GetDistanceFromOrigin());
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
+                    return true;
                 }
-                start = end;
             }
-            
-            distances.Remove(0);
 
-            return distances.Min();
+            return false;
         }
-        private static Point _Move(Point start, string command)
+
+        public static int GetDistanceFromOrigin(Point point, List<Line> lines, Line latestLine = null)
+        {
+            Line remainingLine;
+            var distance = 0;
+            foreach (var line in lines)
+            {
+                if (latestLine != null && line == latestLine)
+                {
+                    remainingLine = new Line(latestLine.P1, point);
+                    distance += remainingLine.Length();
+                    return distance;
+                }
+                distance += line.Length();
+            }
+            Line lastLine = lines.Last();
+            remainingLine = new Line(lastLine.P2, point);
+            distance += remainingLine.Length();
+            return distance;
+        }
+
+        public static Point Move(Point start, string command)
         {
             var m = new Regex("(R|D|U|L)(\\d+)").Match(command);
             string direction = m.Groups[1].Value;
@@ -71,37 +64,6 @@ namespace Codes.day3
             }
 
             throw new Exception("Unknown command");
-        }
-
-        public static int SolvePart1()
-        {
-            var wires = _GetWires();
-            
-            return Run(wires.Item1, wires.Item2);
-        }
-
-        public static double SolvePart2()
-        {
-            throw new System.NotImplementedException();
-        }
-
-
-        private static Tuple<string[], string[]> _GetWires()
-        {
-            var fileContent = File.ReadAllText(@"../../../../codes/day3/wires.txt");
-
-            var wires = fileContent.Split(new[] { ' ', '\t', '\r', '\n' }, 
-                StringSplitOptions.RemoveEmptyEntries);
-
-            var firstWire = wires[0].Split(",", StringSplitOptions.RemoveEmptyEntries);
-            var secondWire = wires[1].Split(",", StringSplitOptions.RemoveEmptyEntries);
-
-            return Tuple.Create(firstWire, secondWire);
-        }
-
-        public static bool IsIntersect(Point p1, Point p2, Point p3, Point p4)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 
 namespace Codes.day3
@@ -18,7 +17,7 @@ namespace Codes.day3
         public int Length()
         {
             var point = P1 - P2;
-            return (int) Math.Sqrt(point.X * point.X + point.Y + point.Y);
+            return Math.Abs(point.X == 0 ? point.Y : point.X);
         }
 
         public bool IsVertical()
@@ -48,25 +47,6 @@ namespace Codes.day3
                 throw new Exception("Not intersect");
             }
             return new Point(P1.X, line.P1.Y);
-        }
-        
-        public IEnumerable<Point> GetAllPoints()
-        {
-            var points = new HashSet<Point>();
-            if (IsVertical())
-            {
-                for (var i = 0; i <= Math.Abs(P1.Y - P2.Y); i++)
-                {
-                    points.Add(new Point(P1.X, Math.Min(P1.Y, P2.Y) + i));
-                }
-            }else if (IsHorizontal())
-            {
-                for (var i = 0; i <= Math.Abs(P1.X - P2.X); i++)
-                {
-                    points.Add(new Point(Math.Min(P1.X, P2.X) + i, P1.Y));
-                }
-            }
-            return points;
         }
     }
 }

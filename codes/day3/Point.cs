@@ -15,7 +15,7 @@ namespace Codes.day3
 
         public static Point operator- (Point p1, Point p2)
         {
-            var point = new Point {X = p2.X - p1.X, Y = p2.Y - p2.Y};
+            var point = new Point {X = p2.X - p1.X, Y = p2.Y - p1.Y};
             return point;
         }
         
