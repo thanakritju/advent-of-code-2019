@@ -1,9 +1,8 @@
 using System.Linq;
 using Codes.day7;
 using NUnit.Framework;
-using Runner = Codes.day5.Runner;
 
-namespace Tests.day5
+namespace Tests.day7
 {
     public class SupervisionTerminalTest
     {

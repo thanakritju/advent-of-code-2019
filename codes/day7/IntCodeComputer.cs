@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Codes.day5
+namespace Codes.day7
 {
     public partial class IntCodeComputer
     {

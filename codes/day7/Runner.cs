@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Codes.day5
+namespace Codes.day7
 {
     public class Runner
     {
@@ -22,7 +22,7 @@ namespace Codes.day5
         public static double SolveDay2Part1(int arg1, int arg2)
         {
             var program = _GetIntCodes(@"../../../../codes/day2/program.txt");
-            var computer = new day7.IntCodeComputer();
+            var computer = new IntCodeComputer();
 
             var outputProgram = computer.Run(program, arg1, arg2);
 
@@ -35,20 +35,21 @@ namespace Codes.day5
             for (var j = 0; j < 99; j++)
                 try
                 {
-                    var computer = new day7.IntCodeComputer();
+                    var computer = new IntCodeComputer();
                     var output = computer.Run(_GetIntCodes(@"../../../../codes/day2/program.txt"), i, j);
                     if (output[0] == target) return 100 * i + j;
                 }
                 catch (Exception)
                 {
+                    // ignored
                 }
 
             return -1;
         }
 
-        public static day7.IntCodeComputer SolveDay5Part1(int input)
+        public static IntCodeComputer SolveDay5Part1(int input)
         {
-            var computer = new day7.IntCodeComputer();
+            var computer = new IntCodeComputer();
             var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
             computer.InputData.Enqueue(input);
             computer.Run(program);
@@ -56,9 +57,9 @@ namespace Codes.day5
             return computer;
         }
 
-        public static day7.IntCodeComputer SolveDay5Part2(in int input)
+        public static IntCodeComputer SolveDay5Part2(in int input)
         {
-            var computer = new day7.IntCodeComputer();
+            var computer = new IntCodeComputer();
             var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
             computer.InputData.Enqueue(input);
             computer.Run(program);
