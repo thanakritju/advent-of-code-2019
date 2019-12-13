@@ -7,22 +7,25 @@ namespace Tests.day7
     public class SupervisionTerminalTest
     {
         private IntCodeComputer _computer;
+        private ComputeEngine _engine;
 
         [SetUp]
         public void Setup()
         {
+            _engine = new ComputeEngine();
             _computer = new IntCodeComputer();
+            _computer.AddEngine(_engine);
         }
 
 
         [TestCase(new[] {3, 0, 4, 0, 99}, 15, 15, new[] {15, 0, 4, 0, 99})]
         public void TestRunOperationCodeThreeAndFour(int[] program, int input, int output, int[] expectedProgram)
         {
-            _computer.InputData.Enqueue(input);
+            _engine.InputData.Enqueue(input);
 
             var outputProgram = _computer.Run(program);
 
-            Assert.AreEqual(output, _computer.OutputData.First());
+            Assert.AreEqual(output, _engine.OutputData.First());
             Assert.AreEqual(expectedProgram, outputProgram);
         }
 
@@ -68,11 +71,11 @@ namespace Tests.day7
         }, 9, 1001)]
         public void TestSixthSeventhEighthAndNinthOperationCode(int[] program, int input, int output)
         {
-            _computer.InputData.Enqueue(input);
+            _engine.InputData.Enqueue(input);
 
             _computer.Run(program);
 
-            Assert.AreEqual(output, _computer.OutputData.Last());
+            Assert.AreEqual(output, _engine.OutputData.Last());
         }
 
         [Test]
@@ -82,7 +85,7 @@ namespace Tests.day7
 
             var intCodeComputer = Runner.SolveDay5Part1(input);
 
-            Assert.AreEqual(15259545, intCodeComputer.OutputData.Last());
+            Assert.AreEqual(15259545, intCodeComputer.GetOutputFromEngine());
         }
 
         [Test]
@@ -92,7 +95,7 @@ namespace Tests.day7
 
             var intCodeComputer = Runner.SolveDay5Part2(input);
 
-            Assert.AreEqual(7616021, intCodeComputer.OutputData.Last());
+            Assert.AreEqual(7616021, intCodeComputer.GetOutputFromEngine());
         }
     }
 }

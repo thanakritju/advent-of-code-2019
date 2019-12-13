@@ -3,9 +3,19 @@ using System.Collections.Generic;
 
 namespace Codes.day7
 {
-    public partial class IntCodeComputer
+    public partial class ComputeEngine
     {
-        private int[] _Run(int[] program, int index)
+        
+        public ComputeEngine()
+        {
+            InputData = new Queue<int>();
+            OutputData = new List<int>();
+        }
+
+        public Queue<int> InputData { get; }
+        public List<int> OutputData { get; }
+        
+        public int[] Run(int[] program, int index)
         {
             var preParseOpCode = program[index];
             var (opCode, modes) = _ParseOperationCode(preParseOpCode);
@@ -14,21 +24,21 @@ namespace Codes.day7
                 case 99:
                     return program;
                 case 1:
-                    return _Run(_Add(program, index, modes), index + 4);
+                    return Run(_Add(program, index, modes), index + 4);
                 case 2:
-                    return _Run(_Multiply(program, index, modes), index + 4);
+                    return Run(_Multiply(program, index, modes), index + 4);
                 case 3:
-                    return _Run(_Read(program, index), index + 2);
+                    return Run(_Read(program, index), index + 2);
                 case 4:
-                    return _Run(_Print(program, index, modes), index + 2);
+                    return Run(_Print(program, index, modes), index + 2);
                 case 5:
-                    return _Run(program, _JumpIfTrue(program, index, modes));
+                    return Run(program, _JumpIfTrue(program, index, modes));
                 case 6:
-                    return _Run(program, _JumpIfFalse(program, index, modes));
+                    return Run(program, _JumpIfFalse(program, index, modes));
                 case 7:
-                    return _Run(_LessThan(program, index, modes), index + 4);
+                    return Run(_LessThan(program, index, modes), index + 4);
                 case 8:
-                    return _Run(_Equals(program, index, modes), index + 4);
+                    return Run(_Equals(program, index, modes), index + 4);
             }
 
             throw new Exception($"Unidentified Operation Code: {opCode}");

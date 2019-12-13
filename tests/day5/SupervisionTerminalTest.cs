@@ -1,5 +1,5 @@
 using System.Linq;
-using Codes.day7;
+using Codes.day5;
 using NUnit.Framework;
 using Runner = Codes.day5.Runner;
 

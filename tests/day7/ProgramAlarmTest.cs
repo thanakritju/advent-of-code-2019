@@ -6,12 +6,14 @@ namespace Tests.day7
     public class ProgramAlarmTests
     {
         private IntCodeComputer _computer;
+        private ComputeEngine _engine;
 
         [SetUp]
         public void Setup()
         {
-            ;
+            _engine = new ComputeEngine();
             _computer = new IntCodeComputer();
+            _computer.AddEngine(_engine);
         }
 
         [TestCase(new[] {1, 0, 0, 0, 99}, new[] {2, 0, 0, 0, 99})]

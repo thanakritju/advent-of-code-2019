@@ -23,6 +23,8 @@ namespace Codes.day7
         {
             var program = _GetIntCodes(@"../../../../codes/day2/program.txt");
             var computer = new IntCodeComputer();
+            var engine = new ComputeEngine();
+            computer.AddEngine(engine);
 
             var outputProgram = computer.Run(program, arg1, arg2);
 
@@ -36,6 +38,8 @@ namespace Codes.day7
                 try
                 {
                     var computer = new IntCodeComputer();
+                    var engine = new ComputeEngine();
+                    computer.AddEngine(engine);
                     var output = computer.Run(_GetIntCodes(@"../../../../codes/day2/program.txt"), i, j);
                     if (output[0] == target) return 100 * i + j;
                 }
@@ -51,7 +55,11 @@ namespace Codes.day7
         {
             var computer = new IntCodeComputer();
             var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
-            computer.InputData.Enqueue(input);
+
+            var computeEngine = new ComputeEngine();
+            computeEngine.InputData.Enqueue(input);
+            
+            computer.AddEngine(computeEngine);
             computer.Run(program);
 
             return computer;
@@ -61,7 +69,11 @@ namespace Codes.day7
         {
             var computer = new IntCodeComputer();
             var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
-            computer.InputData.Enqueue(input);
+            
+            var computeEngine = new ComputeEngine();
+            computeEngine.InputData.Enqueue(input);
+            
+            computer.AddEngine(computeEngine);
             computer.Run(program);
 
             return computer;
