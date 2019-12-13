@@ -34,36 +34,6 @@ namespace Codes.day5
             throw new Exception($"Unidentified Operation Code: {opcode}");
         }
 
-        private int[] _Equals(int[] program, in int index, List<int> modes)
-        {
-            var first = _GetValue(program, index + 1, modes[0]);
-            var second = _GetValue(program, index + 2, modes[1]);
-            program[program[index + 3]] = first == second ? 1 : 0;
-            return program;
-        }
-
-        private int[] _LessThan(int[] program, in int index, List<int> modes)
-        {
-            var first = _GetValue(program, index + 1, modes[0]);
-            var second = _GetValue(program, index + 2, modes[1]);
-            program[program[index + 3]] = first < second ? 1 : 0;
-            return program;
-        }
-
-        private int _JumpIfFalse(int[] program, in int index, List<int> modes)
-        {
-            var first = _GetValue(program, index + 1, modes[0]);
-            var second = _GetValue(program, index + 2, modes[1]);
-            return first == 0 ? second : index + 3;
-        }
-
-        private int _JumpIfTrue(int[] program, in int index, List<int> modes)
-        {
-            var first = _GetValue(program, index + 1, modes[0]);
-            var second = _GetValue(program, index + 2, modes[1]);
-            return first != 0 ? second : index + 3;
-        }
-
         private static Tuple<int, List<int>> _ParseOperationCode(int opcode)
         {
             var modes = new List<int>();
@@ -84,33 +54,6 @@ namespace Codes.day5
         private static int _GetValue(int[] program, int index, int mode = 0)
         {
             return mode == 0 ? program[program[index]] : program[index];
-        }
-
-        private int[] _Print(int[] program, int index, List<int> modes)
-        {
-            OutputData.Add(_GetValue(program, index + 1, modes[0]));
-            return program;
-        }
-
-        private int[] _Read(int[] program, int index)
-        {
-            var i = Convert.ToInt32(InputData.Dequeue());
-            program[program[index + 1]] = i;
-            return program;
-        }
-
-        private static int[] _Add(int[] program, int index, List<int> modes)
-        {
-            program[program[index + 3]] = _GetValue(program, index + 1, modes[0]) + 
-                                          _GetValue(program, index + 2, modes[1]);
-            return program;
-        }
-
-        private static int[] _Multiply(int[] program, int index, List<int> modes)
-        {
-            program[program[index + 3]] = _GetValue(program, index + 1, modes[0]) * 
-                                          _GetValue(program, index + 2, modes[1]);
-            return program;
         }
     }
 }
