@@ -19,7 +19,7 @@ namespace Tests.day1
 
             Assert.AreEqual(2, fuel);
         }
-        
+
         [Test]
         public void TestFuelRecursive()
         {
@@ -29,7 +29,7 @@ namespace Tests.day1
 
             Assert.AreEqual(50346, fuel);
         }
-        
+
         [Test]
         public void TestPart1()
         {
@@ -37,7 +37,7 @@ namespace Tests.day1
 
             Assert.AreEqual(3266516, fuels);
         }
-        
+
         [Test]
         public void TestPart2()
         {
@@ -45,6 +45,5 @@ namespace Tests.day1
 
             Assert.AreEqual(4896902, fuels);
         }
-        
     }
 }

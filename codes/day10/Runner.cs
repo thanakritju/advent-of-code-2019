@@ -14,7 +14,6 @@ namespace Codes.day10
 
         public static Tuple<int, int> RunPart2(string testInput, int number)
         {
-            
             var asteroids = MonitorStation.Parse(testInput);
             return MonitorStation.DestroyAsteroid(asteroids, number);
         }

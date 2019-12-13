@@ -1,7 +1,7 @@
-using Codes.day2;
+using Codes.day5;
 using NUnit.Framework;
 
-namespace Tests.day2
+namespace Tests.day5
 {
     public class ProgramAlarmTests
     {
@@ -16,7 +16,7 @@ namespace Tests.day2
         [TestCase(new[] {1, 1, 1, 4, 99, 5, 6, 0, 99}, new[] {30, 1, 1, 4, 2, 5, 6, 0, 99})]
         public void TestRun(int[] program, int[] expectedProgram)
         {
-            var outputProgram = ProgramAlarm.Run(program);
+            var outputProgram = IntCodeComputor.Run(program);
 
             Assert.AreEqual(expectedProgram, outputProgram);
         }
@@ -25,7 +25,7 @@ namespace Tests.day2
         [Test]
         public void TestPart1()
         {
-            var output = ProgramAlarm.SolvePart1(12, 2);
+            var output = Runner.SolvePart1(12, 2);
 
             Assert.AreEqual(7210630, output);
         }
@@ -35,7 +35,7 @@ namespace Tests.day2
         {
             var target = 19690720;
 
-            var output = ProgramAlarm.SolvePart2(target);
+            var output = Runner.SolvePart2(target);
 
             Assert.AreEqual(3892, output);
         }

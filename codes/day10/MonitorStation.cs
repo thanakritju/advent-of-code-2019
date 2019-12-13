@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Codes.day10
 {
@@ -21,6 +19,7 @@ namespace Codes.day10
             var counts = allAsteroids.Select(allAsteroid => allAsteroid.Count).ToList();
             return allAsteroids[counts.IndexOf(counts.Max())];
         }
+
         public static List<Dictionary<double, List<double>>> GetAllAsteroids(List<Tuple<int, int>> asteroids)
         {
             var detections = new List<Dictionary<double, List<double>>>();
@@ -33,58 +32,43 @@ namespace Codes.day10
             return detections;
         }
 
-        public static Dictionary<double, List<double>> GetAsteroidsDictionary(Tuple<int, int> station, List<Tuple<int, int>> asteroids)
+        public static Dictionary<double, List<double>> GetAsteroidsDictionary(Tuple<int, int> station,
+            List<Tuple<int, int>> asteroids)
         {
             var (x1, y1) = station;
             var table = new Dictionary<double, List<double>>();
-            
+
             foreach (var asteroid in asteroids)
             {
                 var (x2, y2) = asteroid;
                 var dy = y2 - y1;
                 var dx = x2 - x1;
-                if (dx == 0 && dy == 0)
-                {
-                    continue;
-                }
+                if (dx == 0 && dy == 0) continue;
 
                 var key = Math.Atan2(dy, dx);
                 if (table.ContainsKey(key))
-                {
-                    table[key].Add( dx == 0 ? dy : dx);
-                }
+                    table[key].Add(dx == 0 ? dy : dx);
                 else
-                {
                     table[key] = new List<double> {dx == 0 ? dy : dx};
-                }
             }
-            
-            foreach (var item in table)
-            {
-                item.Value.Sort((a, b) => Math.Abs(a).CompareTo(Math.Abs(b)));
-            }
+
+            foreach (var item in table) item.Value.Sort((a, b) => Math.Abs(a).CompareTo(Math.Abs(b)));
 
             return table;
         }
-        
+
         public static List<Tuple<int, int>> Parse(string stringInput)
         {
-            string[] rows = stringInput.Split(
-                new[] { ' ', '\t', '\r', '\n' }, 
+            var rows = stringInput.Split(
+                new[] {' ', '\t', '\r', '\n'},
                 StringSplitOptions.RemoveEmptyEntries
-                );
+            );
 
             var asteroids = new List<Tuple<int, int>>();
             for (var i = 0; i < rows.Length; i++)
-            {
-                for (var j = 0; j < rows[i].Length; j++)
-                {
-                    if (rows[i][j].ToString().Equals("#"))
-                    {
-                        asteroids.Add(Tuple.Create(j ,i));
-                    }
-                }
-            }
+            for (var j = 0; j < rows[i].Length; j++)
+                if (rows[i][j].ToString().Equals("#"))
+                    asteroids.Add(Tuple.Create(j, i));
 
             return asteroids;
         }
@@ -95,23 +79,16 @@ namespace Codes.day10
             var table = GetAsteroidsDictionary(bestStation, asteroids);
             var count = 0;
             Tuple<int, int> ans = null;
-            bool isStarted = false;
+            var isStarted = false;
             while (count != number)
-            {
-                foreach(var (key, value) in table.OrderBy(p => p.Key))
+                foreach (var (key, value) in table.OrderBy(p => p.Key))
                 {
-                    if (count == number)
-                    {
-                        return ans;
-                    }
+                    if (count == number) return ans;
 
                     double dx;
                     double dy;
-                    if (value.Count == 0)
-                    {
-                        continue;
-                    }
-                    if (key == Math.PI/2 || key == -Math.PI/2)
+                    if (value.Count == 0) continue;
+                    if (key == Math.PI / 2 || key == -Math.PI / 2)
                     {
                         dy = value[0];
                         dx = 0.0;
@@ -139,9 +116,8 @@ namespace Codes.day10
                         count++;
                         value.RemoveAt(0);
                     }
-                        
                 }
-            }
+
             return ans;
         }
     }

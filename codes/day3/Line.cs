@@ -1,5 +1,4 @@
 using System;
-using System.Data.SqlTypes;
 
 namespace Codes.day3
 {
@@ -36,16 +35,13 @@ namespace Codes.day3
             {
                 if (line.IsHorizontal() || line.P1.X > Math.Max(P1.X, P2.X) || line.P1.X < Math.Min(P1.X, P2.X)
                     || P1.Y > Math.Max(line.P1.Y, line.P2.Y) || P1.Y < Math.Min(line.P1.Y, line.P2.Y))
-                {
                     throw new Exception("Not intersect");
-                }
                 return new Point(line.P1.X, P1.Y);
             }
+
             if (line.IsVertical() || line.P1.Y > Math.Max(P1.Y, P2.Y) || line.P1.Y < Math.Min(P1.Y, P2.Y)
                 || P1.X > Math.Max(line.P1.X, line.P2.X) || P1.X < Math.Min(line.P1.X, line.P2.X))
-            {
                 throw new Exception("Not intersect");
-            }
             return new Point(P1.X, line.P1.Y);
         }
     }

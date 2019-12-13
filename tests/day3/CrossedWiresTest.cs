@@ -11,10 +11,10 @@ namespace Tests.day3
         {
         }
 
-        [TestCase(new[]{1, 1, 4, 1, 2, 2, 2, 0}, new[]{2, 1})]
-        [TestCase(new[]{1, 3, 1, 7, 0, 5, 2, 5}, new[]{1, 5})]
-        [TestCase(new[]{1, -3, 1, -7, 0, -5, 2, -5}, new[]{1, -5})]
-        [TestCase(new[]{1, 1, 4, 1, 4, 2, 4, 1}, new[]{4, 1})]
+        [TestCase(new[] {1, 1, 4, 1, 2, 2, 2, 0}, new[] {2, 1})]
+        [TestCase(new[] {1, 3, 1, 7, 0, 5, 2, 5}, new[] {1, 5})]
+        [TestCase(new[] {1, -3, 1, -7, 0, -5, 2, -5}, new[] {1, -5})]
+        [TestCase(new[] {1, 1, 4, 1, 4, 2, 4, 1}, new[] {4, 1})]
         public void TestGetIntersect(int[] points, int[] expected)
         {
             var p1 = new Point(points[0], points[1]);
@@ -23,17 +23,17 @@ namespace Tests.day3
             var p4 = new Point(points[6], points[7]);
             var line1 = new Line(p1, p2);
             var line2 = new Line(p3, p4);
-            
+
             var intersect = line1.IntersectWith(line2);
-            
+
             Assert.AreEqual(expected[0], intersect.X);
             Assert.AreEqual(expected[1], intersect.Y);
         }
-        
-        [TestCase(new[]{1, 1, 4, 1, 5, 2, 5, 0})]
-        [TestCase(new[]{1, 3, 1, 7, 0, 2, 2, 2})]
-        [TestCase(new[]{-1, 1, -4, 1, -5, 2, -5, 0})]
-        [TestCase(new[]{0, 0, 4, 0, 3, 4, 3, 3})]
+
+        [TestCase(new[] {1, 1, 4, 1, 5, 2, 5, 0})]
+        [TestCase(new[] {1, 3, 1, 7, 0, 2, 2, 2})]
+        [TestCase(new[] {-1, 1, -4, 1, -5, 2, -5, 0})]
+        [TestCase(new[] {0, 0, 4, 0, 3, 4, 3, 3})]
         public void TestGetIntersectThrowException(int[] points)
         {
             var p1 = new Point(points[0], points[1]);
@@ -46,38 +46,38 @@ namespace Tests.day3
             Assert.Throws<Exception>(() => line1.IntersectWith(line2));
         }
 
-        [TestCase(new[] {"R8","U5","L5","D3"}, new[] {"U7","R6","D4","L4"}, 6)]
+        [TestCase(new[] {"R8", "U5", "L5", "D3"}, new[] {"U7", "R6", "D4", "L4"}, 6)]
         [TestCase(
-            new[] {"R75","D30","R83","U83","L12","D49","R71","U7","L72"}, 
-            new[] {"U62","R66","U55","R34","D71","R55","D58","R83"}, 
+            new[] {"R75", "D30", "R83", "U83", "L12", "D49", "R71", "U7", "L72"},
+            new[] {"U62", "R66", "U55", "R34", "D71", "R55", "D58", "R83"},
             159)]
         [TestCase(
-            new[] {"R98","U47","R26","D63","R33","U87","L62","D20","R33","U53","R51"}, 
-            new[] {"U98","R91","D20","R16","D67","R40","U7","R15","U6","R7"}, 
+            new[] {"R98", "U47", "R26", "D63", "R33", "U87", "L62", "D20", "R33", "U53", "R51"},
+            new[] {"U98", "R91", "D20", "R16", "D67", "R40", "U7", "R15", "U6", "R7"},
             135)]
-        public void TestRunPart1(string[] wire1,string[] wire2, int expected)
+        public void TestRunPart1(string[] wire1, string[] wire2, int expected)
         {
             var distance = Runner.RunPart1(wire1, wire2);
 
             Assert.AreEqual(expected, distance);
         }
-        
-        [TestCase(new[] {"R8","U5","L5","D3"}, new[] {"U7","R6","D4","L4"}, 30)]
+
+        [TestCase(new[] {"R8", "U5", "L5", "D3"}, new[] {"U7", "R6", "D4", "L4"}, 30)]
         [TestCase(
-            new[] {"R75","D30","R83","U83","L12","D49","R71","U7","L72"}, 
-            new[] {"U62","R66","U55","R34","D71","R55","D58","R83"}, 
+            new[] {"R75", "D30", "R83", "U83", "L12", "D49", "R71", "U7", "L72"},
+            new[] {"U62", "R66", "U55", "R34", "D71", "R55", "D58", "R83"},
             610)]
         [TestCase(
-            new[] {"R98","U47","R26","D63","R33","U87","L62","D20","R33","U53","R51"}, 
-            new[] {"U98","R91","D20","R16","D67","R40","U7","R15","U6","R7"}, 
+            new[] {"R98", "U47", "R26", "D63", "R33", "U87", "L62", "D20", "R33", "U53", "R51"},
+            new[] {"U98", "R91", "D20", "R16", "D67", "R40", "U7", "R15", "U6", "R7"},
             410)]
-        public void TestRunPart2(string[] wire1,string[] wire2, int expected)
+        public void TestRunPart2(string[] wire1, string[] wire2, int expected)
         {
             var distance = Runner.RunPart2(wire1, wire2);
 
             Assert.AreEqual(expected, distance);
         }
-        
+
         [Test]
         public void TestPart1()
         {
@@ -85,7 +85,7 @@ namespace Tests.day3
 
             Assert.AreEqual(5319, output);
         }
-        
+
         [Test]
         public void TestPart2()
         {

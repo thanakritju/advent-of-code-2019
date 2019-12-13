@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -11,12 +10,8 @@ namespace Codes.day3
         public static bool IsInPoints(List<Point> points, Point point)
         {
             foreach (var p in points)
-            {
                 if (p.X == point.X && p.Y == point.Y)
-                {
                     return true;
-                }
-            }
 
             return false;
         }
@@ -33,9 +28,11 @@ namespace Codes.day3
                     distance += remainingLine.Length();
                     return distance;
                 }
+
                 distance += line.Length();
             }
-            Line lastLine = lines.Last();
+
+            var lastLine = lines.Last();
             remainingLine = new Line(lastLine.P2, point);
             distance += remainingLine.Length();
             return distance;
@@ -44,24 +41,12 @@ namespace Codes.day3
         public static Point Move(Point start, string command)
         {
             var m = new Regex("(R|D|U|L)(\\d+)").Match(command);
-            string direction = m.Groups[1].Value;
-            int value = int.Parse(m.Groups[2].Value);
-            if (direction.Equals("U"))
-            {
-                return new Point(start.X, start.Y + value);
-            }
-            if (direction.Equals("D"))
-            {
-                return new Point(start.X, start.Y - value);
-            }
-            if (direction.Equals("L"))
-            {
-                return new Point(start.X - value, start.Y);
-            }
-            if (direction.Equals("R"))
-            {
-                return new Point(start.X + value, start.Y);
-            }
+            var direction = m.Groups[1].Value;
+            var value = int.Parse(m.Groups[2].Value);
+            if (direction.Equals("U")) return new Point(start.X, start.Y + value);
+            if (direction.Equals("D")) return new Point(start.X, start.Y - value);
+            if (direction.Equals("L")) return new Point(start.X - value, start.Y);
+            if (direction.Equals("R")) return new Point(start.X + value, start.Y);
 
             throw new Exception("Unknown command");
         }

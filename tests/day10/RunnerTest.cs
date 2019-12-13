@@ -8,7 +8,7 @@ namespace Tests.day10
     public class RunnerTests
     {
         private string _testInput;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -19,15 +19,15 @@ namespace Tests.day10
         public void TestPart1()
         {
             var output = Runner.RunPart1(_testInput);
-            
+
             Assert.AreEqual(292, output);
         }
-        
+
         [Test]
         public void TestPart2()
         {
             var output = Runner.RunPart2(_testInput, 200);
-            
+
             Assert.AreEqual(Tuple.Create(3, 17), output);
         }
     }

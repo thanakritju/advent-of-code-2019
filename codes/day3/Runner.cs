@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Codes.day3;
 
 namespace Codes.day3
 {
@@ -10,7 +9,7 @@ namespace Codes.day3
     {
         public static int RunPart1(string[] wire1, string[] wire2)
         {
-            Point start = new Point();
+            var start = new Point();
             var lines = new List<Line>();
             foreach (var command in wire1)
             {
@@ -26,7 +25,6 @@ namespace Codes.day3
                 var end = CrossedWires.Move(start, command);
                 var tmpLine = new Line(start, end);
                 foreach (var line in lines)
-                {
                     try
                     {
                         var point = line.IntersectWith(tmpLine);
@@ -37,7 +35,6 @@ namespace Codes.day3
                     {
                         Console.WriteLine(e);
                     }
-                }
 
                 start = end;
             }
@@ -49,7 +46,7 @@ namespace Codes.day3
 
         public static int RunPart2(string[] wire1, string[] wire2)
         {
-            Point start = new Point();
+            var start = new Point();
             var lines1 = new List<Line>();
             foreach (var command in wire1)
             {
@@ -67,14 +64,10 @@ namespace Codes.day3
                 var end = CrossedWires.Move(start, command);
                 var line2 = new Line(start, end);
                 foreach (var line1 in lines1)
-                {
                     try
                     {
                         var point = line1.IntersectWith(line2);
-                        if (CrossedWires.IsInPoints(points, point))
-                        {
-                            continue;
-                        }
+                        if (CrossedWires.IsInPoints(points, point)) continue;
 
                         points.Add(point);
                         distances.Add(
@@ -86,7 +79,6 @@ namespace Codes.day3
                     {
                         Console.WriteLine(e);
                     }
-                }
 
                 lines2.Add(line2);
                 start = end;
