@@ -7,9 +7,9 @@ namespace Codes.day5
     {
         private int[] _Run(int[] program, int index)
         {
-            var preParseOpcode = program[index];
-            var (opcode, modes) = _ParseOperationCode(preParseOpcode);
-            switch (opcode)
+            var preParseOpCode = program[index];
+            var (opCode, modes) = _ParseOperationCode(preParseOpCode);
+            switch (opCode)
             {
                 case 99:
                     return program;
@@ -31,24 +31,24 @@ namespace Codes.day5
                     return _Run(_Equals(program, index, modes), index + 4);
             }
 
-            throw new Exception($"Unidentified Operation Code: {opcode}");
+            throw new Exception($"Unidentified Operation Code: {opCode}");
         }
 
-        private static Tuple<int, List<int>> _ParseOperationCode(int opcode)
+        private static Tuple<int, List<int>> _ParseOperationCode(int opCode)
         {
             var modes = new List<int>();
-            if (opcode > 99)
+            if (opCode > 99)
             {
-                modes.Add(opcode/100%10);
-                modes.Add(opcode/1000);
-                opcode %= 100;
+                modes.Add(opCode/100%10);
+                modes.Add(opCode/1000);
+                opCode %= 100;
             }
             else
             {
                 modes.Add(0);
                 modes.Add(0);
             }
-            return Tuple.Create(opcode, modes);
+            return Tuple.Create(opCode, modes);
         }
 
         private static int _GetValue(int[] program, int index, int mode = 0)
