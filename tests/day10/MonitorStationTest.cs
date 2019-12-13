@@ -72,6 +72,9 @@ namespace Tests.day10
             
             var ninthAsteroidDestroyed = MonitorStation.DestroyAsteroid(asteroids, 9);
             Assert.AreEqual(Tuple.Create(15, 1), ninthAsteroidDestroyed);
+            
+            var nthAsteroidDestroyed = MonitorStation.DestroyAsteroid(asteroids, 36);
+            Assert.AreEqual(Tuple.Create(14, 3), nthAsteroidDestroyed);
         }
         
         

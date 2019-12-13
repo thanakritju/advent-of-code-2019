@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Codes.day10
 {
@@ -13,34 +15,58 @@ namespace Codes.day10
             return asteroids[counts.IndexOf(counts.Max())];
         }
 
-        public static HashSet<double> GetAllAsteroidsForBestStation(List<Tuple<int, int>> asteroids)
+        public static Dictionary<double, List<double>> GetAllAsteroidsForBestStation(List<Tuple<int, int>> asteroids)
         {
             var allAsteroids = GetAllAsteroids(asteroids);
             var counts = allAsteroids.Select(allAsteroid => allAsteroid.Count).ToList();
             return allAsteroids[counts.IndexOf(counts.Max())];
         }
-        public static List<HashSet<double>> GetAllAsteroids(List<Tuple<int, int>> asteroids)
+        public static List<Dictionary<double, List<double>>> GetAllAsteroids(List<Tuple<int, int>> asteroids)
         {
-            var detections = new List<HashSet<double>>();
+            var detections = new List<Dictionary<double, List<double>>>();
             foreach (var asteroid in asteroids)
             {
-                var s = new HashSet<double>();
-                foreach (var another in asteroids)
-                {
-                    var (x1, y1) = asteroid;
-                    var (x2, y2) = another;
-                    if (x1 == x2 && y1 == y2)
-                    {
-                        continue;
-                    }
-                    s.Add((Math.Atan2(y2 - y1, x2 - x1)) * 180 / Math.PI);
-                }
-                detections.Add(s);
+                var asteroidsHashtable = GetAsteroidsDictionary(asteroid, asteroids);
+                detections.Add(asteroidsHashtable);
             }
 
             return detections;
         }
 
+        public static Dictionary<double, List<double>> GetAsteroidsDictionary(Tuple<int, int> station, List<Tuple<int, int>> asteroids)
+        {
+            var (x1, y1) = station;
+            var table = new Dictionary<double, List<double>>();
+            
+            foreach (var asteroid in asteroids)
+            {
+                var (x2, y2) = asteroid;
+                var dy = y2 - y1;
+                var dx = x2 - x1;
+                if (dx == 0 && dy == 0)
+                {
+                    continue;
+                }
+
+                var key = Math.Atan2(dy, dx);
+                if (table.ContainsKey(key))
+                {
+                    table[key].Add( dx == 0 ? dy : dx);
+                }
+                else
+                {
+                    table[key] = new List<double> {dx == 0 ? dy : dx};
+                }
+            }
+            
+            foreach (var item in table)
+            {
+                item.Value.Sort((a, b) => Math.Abs(a).CompareTo(Math.Abs(b)));
+            }
+
+            return table;
+        }
+        
         public static List<Tuple<int, int>> Parse(string stringInput)
         {
             string[] rows = stringInput.Split(
@@ -65,13 +91,58 @@ namespace Codes.day10
 
         public static Tuple<int, int> DestroyAsteroid(List<Tuple<int, int>> asteroids, int number)
         {
-            var detection = GetAllAsteroidsForBestStation(asteroids);
-            var index = 90.0;
+            var bestStation = GetBestStation(asteroids);
+            var table = GetAsteroidsDictionary(bestStation, asteroids);
             var count = 0;
+            Tuple<int, int> ans = null;
+            bool isStarted = false;
             while (count != number)
             {
-                
+                foreach(var (key, value) in table.OrderBy(p => p.Key))
+                {
+                    if (count == number)
+                    {
+                        return ans;
+                    }
+
+                    double dx;
+                    double dy;
+                    if (value.Count == 0)
+                    {
+                        continue;
+                    }
+                    if (key == Math.PI/2 || key == -Math.PI/2)
+                    {
+                        dy = value[0];
+                        dx = 0.0;
+                    }
+                    else
+                    {
+                        dy = Math.Tan(key) * value[0];
+                        dx = value[0];
+                    }
+
+                    var test = Tuple.Create((int) (bestStation.Item1 + dx), (int) (bestStation.Item2 + dy));
+                    if (!isStarted)
+                    {
+                        if (test.Item1 == bestStation.Item1 && test.Item2 < bestStation.Item2)
+                        {
+                            isStarted = true;
+                            ans = test;
+                            count++;
+                            value.RemoveAt(0);
+                        }
+                    }
+                    else
+                    {
+                        ans = test;
+                        count++;
+                        value.RemoveAt(0);
+                    }
+                        
+                }
             }
+            return ans;
         }
     }
 }

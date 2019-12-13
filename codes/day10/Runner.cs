@@ -12,9 +12,11 @@ namespace Codes.day10
             return detections.Select(allAsteroid => allAsteroid.Count).ToList().Max();
         }
 
-        public static int RunPart2(string testInput)
+        public static Tuple<int, int> RunPart2(string testInput, int number)
         {
-            return 0;
+            
+            var asteroids = MonitorStation.Parse(testInput);
+            return MonitorStation.DestroyAsteroid(asteroids, number);
         }
     }
 }

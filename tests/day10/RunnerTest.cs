@@ -26,9 +26,9 @@ namespace Tests.day10
         [Test]
         public void TestPart2()
         {
-            var output = Runner.RunPart2(_testInput);
+            var output = Runner.RunPart2(_testInput, 200);
             
-            Assert.AreEqual(Tuple.Create(0, 0), output);
+            Assert.AreEqual(Tuple.Create(3, 17), output);
         }
     }
 }
