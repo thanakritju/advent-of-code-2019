@@ -7,9 +7,10 @@ namespace Codes.day5
     {
         public static int SolvePart1(int arg1, int arg2)
         {
+            var computer = new IntCodeComputer();
             var program = _GetIntCodes();
-
-            var outputProgram = IntCodeComputor.Run(program, arg1, arg2);
+            
+            var outputProgram = computer.Run(program, arg1, arg2);
 
             return outputProgram[0];
         }
@@ -20,7 +21,8 @@ namespace Codes.day5
             for (var j = 0; j < 99; j++)
                 try
                 {
-                    var output = IntCodeComputor.Run(_GetIntCodes(), i, j);
+                    var computer = new IntCodeComputer();
+                    var output = computer.Run(_GetIntCodes(), i, j);
                     if (output[0] == target) return 100 * i + j;
                 }
                 catch (Exception)

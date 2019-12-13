@@ -5,9 +5,12 @@ namespace Tests.day5
 {
     public class ProgramAlarmTests
     {
+        private IntCodeComputer _computer;
+
         [SetUp]
         public void Setup()
-        {
+        {;
+            _computer = new IntCodeComputer();
         }
 
         [TestCase(new[] {1, 0, 0, 0, 99}, new[] {2, 0, 0, 0, 99})]
@@ -16,7 +19,7 @@ namespace Tests.day5
         [TestCase(new[] {1, 1, 1, 4, 99, 5, 6, 0, 99}, new[] {30, 1, 1, 4, 2, 5, 6, 0, 99})]
         public void TestRun(int[] program, int[] expectedProgram)
         {
-            var outputProgram = IntCodeComputor.Run(program);
+            var outputProgram = _computer.Run(program);
 
             Assert.AreEqual(expectedProgram, outputProgram);
         }
