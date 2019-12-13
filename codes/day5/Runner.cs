@@ -5,16 +5,6 @@ namespace Codes.day5
 {
     public class Runner
     {
-        public static IntCodeComputer SolveDay5Part1(int input)
-        {
-            var computer = new IntCodeComputer();
-            var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
-            computer.InputData.Enqueue(input);
-            computer.Run(program);
-
-            return computer;
-        }
-
         private static int[] _GetIntCodes(string path)
         {
             var fileContent = File.ReadAllText(path);
@@ -54,6 +44,26 @@ namespace Codes.day5
                 }
 
             return -1;
+        }
+
+        public static IntCodeComputer SolveDay5Part1(int input)
+        {
+            var computer = new IntCodeComputer();
+            var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
+            computer.InputData.Enqueue(input);
+            computer.Run(program);
+
+            return computer;
+        }
+
+        public static IntCodeComputer SolveDay5Part2(in int input)
+        {
+            var computer = new IntCodeComputer();
+            var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
+            computer.InputData.Enqueue(input);
+            computer.Run(program);
+
+            return computer;
         }
     }
 }
