@@ -1,4 +1,5 @@
 using Codes.day5;
+using Codes.day2;
 using NUnit.Framework;
 
 namespace Tests.day5
@@ -26,19 +27,19 @@ namespace Tests.day5
 
 
         [Test]
-        public void TestPart1()
+        public void TestDay2Part1()
         {
-            var output = Runner.SolvePart1(12, 2);
+            var output = Runner.SolveDay2Part1(12, 2);
 
             Assert.AreEqual(7210630, output);
         }
 
         [Test]
-        public void TestPart2()
+        public void TestDay2Part2()
         {
             var target = 19690720;
 
-            var output = Runner.SolvePart2(target);
+            var output = Runner.SolveDay2Part2(target);
 
             Assert.AreEqual(3892, output);
         }

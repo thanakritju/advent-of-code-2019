@@ -5,37 +5,19 @@ namespace Codes.day5
 {
     public class Runner
     {
-        public static int SolvePart1(int arg1, int arg2)
+        public static IntCodeComputer SolveDay5Part1(int input)
         {
             var computer = new IntCodeComputer();
-            var program = _GetIntCodes();
-            
-            var outputProgram = computer.Run(program, arg1, arg2);
+            var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
+            computer.InputData.Enqueue(input);
+            computer.Run(program);
 
-            return outputProgram[0];
+            return computer;
         }
 
-        public static int SolvePart2(int target)
+        private static int[] _GetIntCodes(string path)
         {
-            for (var i = 0; i < 99; i++)
-            for (var j = 0; j < 99; j++)
-                try
-                {
-                    var computer = new IntCodeComputer();
-                    var output = computer.Run(_GetIntCodes(), i, j);
-                    if (output[0] == target) return 100 * i + j;
-                }
-                catch (Exception)
-                {
-                    // ignored
-                }
-
-            return -1;
-        }
-
-        private static int[] _GetIntCodes()
-        {
-            var fileContent = File.ReadAllText(@"../../../../codes/day2/program.txt");
+            var fileContent = File.ReadAllText(path);
 
             var integerStrings = fileContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
 
@@ -45,6 +27,33 @@ namespace Codes.day5
                 integers[n] = int.Parse(integerStrings[n]);
 
             return integers;
+        }
+
+        public static double SolveDay2Part1(int arg1, int arg2)
+        {
+            var program = _GetIntCodes(@"../../../../codes/day2/program.txt");
+            var computer = new IntCodeComputer();
+            
+            var outputProgram = computer.Run(program, arg1, arg2);
+
+            return outputProgram[0];
+        }
+
+        public static double SolveDay2Part2(in int target)
+        {
+            for (var i = 0; i < 99; i++)
+            for (var j = 0; j < 99; j++)
+                try
+                {
+                    var computer = new IntCodeComputer();
+                    var output = computer.Run(_GetIntCodes(@"../../../../codes/day2/program.txt"), i, j);
+                    if (output[0] == target) return 100 * i + j;
+                }
+                catch (Exception)
+                {
+                }
+
+            return -1;
         }
     }
 }

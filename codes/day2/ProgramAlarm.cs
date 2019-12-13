@@ -69,6 +69,7 @@ namespace Codes.day2
                 }
                 catch (Exception)
                 {
+                    // ignored
                 }
 
             return -1;

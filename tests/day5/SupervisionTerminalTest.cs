@@ -34,5 +34,15 @@ namespace Tests.day5
 
             Assert.AreEqual(expectedProgram, outputProgram);
         }
+
+        [Test]
+        public void TestDay5Part1()
+        {
+            var input = 1;
+
+            var intCodeComputer = Runner.SolveDay5Part1(input);
+            
+            Assert.AreEqual(15259545, intCodeComputer.OutputData.Last());
+        }
     }
 }
