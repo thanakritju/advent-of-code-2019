@@ -1,20 +1,21 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
-namespace Codes.day5
+namespace Codes.day9
 {
     public class Runner
     {
-        private static int[] _GetIntCodes(string path)
+        private static long[] _GetIntCodes(string path)
         {
             var fileContent = File.ReadAllText(path);
 
             var integerStrings = fileContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
 
-            var integers = new int[integerStrings.Length];
+            var integers = new long[integerStrings.Length];
 
             for (var n = 0; n < integerStrings.Length; n++)
-                integers[n] = int.Parse(integerStrings[n]);
+                integers[n] = long.Parse(integerStrings[n]);
 
             return integers;
         }
@@ -64,6 +65,16 @@ namespace Codes.day5
             computer.Run(program);
 
             return computer;
+        }
+
+        public static List<long> SolveDay9Part1(in int input)
+        {
+            var computer = new IntCodeComputer();
+            var program = _GetIntCodes(@"../../../../codes/day9/program.txt");
+            computer.InputData.Enqueue(input);
+            computer.Run(program);
+
+            return computer.OutputData;
         }
     }
 }

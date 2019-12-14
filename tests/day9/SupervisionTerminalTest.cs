@@ -1,8 +1,8 @@
 using System.Linq;
-using Codes.day5;
+using Codes.day9;
 using NUnit.Framework;
 
-namespace Tests.day5
+namespace Tests.day9
 {
     public class SupervisionTerminalTest
     {
