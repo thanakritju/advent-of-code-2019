@@ -5,21 +5,21 @@ namespace Codes.day7
 {
     public class IntCodeComputer
     {
-        public List<ComputeEngine> Engines;
+        private readonly List<ComputeEngine> _engines;
 
         public IntCodeComputer()
         {
-            Engines = new List<ComputeEngine>();
+            _engines = new List<ComputeEngine>();
         }
 
         public void AddEngine(ComputeEngine engine)
         {
-            Engines.Add(engine);
+            _engines.Add(engine);
         }
 
         public int GetOutputFromEngine()
         {
-            return Engines.Last().OutputData.Last();
+            return _engines.Last().GetOutput();
         }
 
         public int[] Run(int[] program, int arg1, int arg2)
@@ -27,13 +27,43 @@ namespace Codes.day7
             program[1] = arg1;
             program[2] = arg2;
 
-            return Engines.First().Run(program, 0);
+            return _engines.First().Run(program, 0);
         }
-
 
         public int[] Run(int[] program)
         {
-            return Engines.First().Run(program, 0);
+            return _engines.First().Run(program, 0);
+        }
+
+        public void RunMultipleEngines(int[] program, IEnumerable<int> possiblePhaseSetting)
+        {
+            _AddPhaseSetting(possiblePhaseSetting);
+
+            const int inputEngine = 0;
+            _engines[0].AddInput(inputEngine);
+
+            for (var i = 0; i < _engines.Count; i++)
+            {
+                _engines[i].Run(program, 0);
+                if (i < _engines.Count - 1) _engines[i + 1].AddInput(_engines[i].GetOutput());
+            }
+        }
+
+        private void _AddPhaseSetting(IEnumerable<int> possiblePhaseSetting)
+        {
+            var i = 0;
+            foreach (var phaseInput in possiblePhaseSetting)
+            {
+                _engines[i].AddInput(phaseInput);
+                i++;
+            }
+        }
+
+        public override string ToString()
+        {
+            var output = "";
+            foreach (var engine in _engines) output += $"Output data: {engine.OutputData.Last()}\n\n";
+            return output;
         }
     }
 }

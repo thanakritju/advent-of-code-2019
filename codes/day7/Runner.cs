@@ -58,7 +58,7 @@ namespace Codes.day7
 
             var computeEngine = new ComputeEngine();
             computeEngine.InputData.Enqueue(input);
-            
+
             computer.AddEngine(computeEngine);
             computer.Run(program);
 
@@ -69,14 +69,20 @@ namespace Codes.day7
         {
             var computer = new IntCodeComputer();
             var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
-            
+
             var computeEngine = new ComputeEngine();
             computeEngine.InputData.Enqueue(input);
-            
+
             computer.AddEngine(computeEngine);
             computer.Run(program);
 
             return computer;
+        }
+
+        public static double SolveDay7Part1()
+        {
+            var program = _GetIntCodes(@"../../../../codes/day7/program.txt");
+            return AmplificationCircuit.FindMaxThrust(program, new[] {0, 1, 2, 3, 4});
         }
     }
 }

@@ -43,9 +43,18 @@ namespace Codes.day7
 
         private int[] _Read(int[] program, in int index)
         {
-            var i = Convert.ToInt32(InputData.Dequeue());
-            program[program[index + 1]] = i;
-            return program;
+            try
+            {
+                var i = Convert.ToInt32(InputData.Dequeue());
+                program[program[index + 1]] = i;
+                return program;
+            }
+            catch (InvalidOperationException)
+            {
+                _savedProgram = program;
+                _savedInstruction = index;
+                throw new InvalidOperationException("There is no input, waiting for input");
+            }
         }
 
         private static int[] _Add(int[] program, in int index, List<int> modes)
