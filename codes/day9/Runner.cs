@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Codes.day9
 {
@@ -67,14 +67,14 @@ namespace Codes.day9
             return computer;
         }
 
-        public static List<long> SolveDay9Part1(in int input)
+        public static long SolveDay9Part1(in int input)
         {
             var computer = new IntCodeComputer();
             var program = _GetIntCodes(@"../../../../codes/day9/program.txt");
             computer.InputData.Enqueue(input);
             computer.Run(program);
 
-            return computer.OutputData;
+            return computer.OutputData.Last();
         }
     }
 }

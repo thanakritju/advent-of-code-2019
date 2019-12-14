@@ -10,40 +10,59 @@ namespace Codes.day9
             var program = new long[inputProgram.Length];
             inputProgram.CopyTo(program, 0);
 
-            var preParseOpCode = program[index];
-            var (opCode, modes) = _ParseOperationCode(preParseOpCode);
             try
             {
-                switch (opCode)
+                while (true)
                 {
-                    case 99:
-                        return program;
-                    case 1:
-                        return _Run(_Add(program, index, modes), index + 4);
-                    case 2:
-                        return _Run(_Multiply(program, index, modes), index + 4);
-                    case 3:
-                        return _Run(_Read(program, index, modes), index + 2);
-                    case 4:
-                        return _Run(_Print(program, index, modes), index + 2);
-                    case 5:
-                        return _Run(program, _JumpIfTrue(program, index, modes));
-                    case 6:
-                        return _Run(program, _JumpIfFalse(program, index, modes));
-                    case 7:
-                        return _Run(_LessThan(program, index, modes), index + 4);
-                    case 8:
-                        return _Run(_Equals(program, index, modes), index + 4);
-                    case 9:
-                        return _Run(_AdjustRelativeBase(program, index, modes), index + 2);
+                    var preParseOpCode = program[index];
+                    var (opCode, modes) = _ParseOperationCode(preParseOpCode);
+                    switch (opCode)
+                    {
+                        case 99:
+                            return program;
+                        case 1:
+                            program = _Add(program, index, modes);
+                            index += 4;
+                            break;
+                        case 2:
+                            program = _Multiply(program, index, modes);
+                            index += 4;
+                            break;
+                        case 3:
+                            program = _Read(program, index, modes);
+                            index += 2;
+                            break;
+                        case 4:
+                            program = _Print(program, index, modes);
+                            index += 2;
+                            break;
+                        case 5:
+                            index = _JumpIfTrue(program, index, modes);
+                            break;
+                        case 6:
+                            index = _JumpIfFalse(program, index, modes);
+                            break;
+                        case 7:
+                            program = _LessThan(program, index, modes);
+                            index += 4;
+                            break;
+                        case 8:
+                            program = _Equals(program, index, modes);
+                            index += 4;
+                            break;
+                        case 9:
+                            program = _AdjustRelativeBase(program, index, modes);
+                            index += 2;
+                            break;
+                        default:
+                            throw new Exception($"Unidentified Operation Code: {opCode}");
+                    }
                 }
             }
             catch (IndexOutOfRangeException)
             {
                 return _Run(_AllocateMoreMemory(program), index);
             }
-
-            throw new Exception($"Unidentified Operation Code: {opCode}");
         }
 
         private long[] _AllocateMoreMemory(long[] program)
@@ -72,6 +91,5 @@ namespace Codes.day9
 
             return Tuple.Create((int) opCode, modes);
         }
-
     }
 }

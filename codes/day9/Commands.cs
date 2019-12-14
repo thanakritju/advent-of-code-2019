@@ -46,7 +46,7 @@ namespace Codes.day9
         private long[] _Read(long[] program, int index, List<int> modes)
         {
             var valueToSet = Convert.ToInt32(InputData.Dequeue());
-            _SetValue(program, index + 1, modes[1], valueToSet);
+            _SetValue(program, index + 1, modes[0], valueToSet);
             return program;
         }
 
@@ -82,13 +82,10 @@ namespace Codes.day9
                 case 2:
                     program[_relativeBase + program[index]] = valueToSet;
                     break;
-                
             }
-            
-//            throw new InvalidOperationException($"Invalid mode {mode}");
         }
-        
-        
+
+
         private long _GetValue(long[] program, int index, int mode = 0)
         {
             switch (mode)

@@ -23,16 +23,15 @@ namespace Codes.day9
             program[2] = arg2;
             return _Run(program, 0);
         }
-        
+
         public long[] Run(long[] program)
         {
             return _Run(program, 0);
         }
-        
+
         public long[] Run(int[] program)
         {
-            
-            return _Run(program.Select(item => (long)item).ToArray(), 0);
+            return _Run(program.Select(item => (long) item).ToArray(), 0);
         }
     }
 }
