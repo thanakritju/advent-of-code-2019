@@ -6,26 +6,34 @@ namespace Codes.day7
 {
     public partial class ComputeEngine
     {
+        private string _name;
         private int _savedInstruction;
 
         private int[] _savedProgram;
 
-        public ComputeEngine()
+        public ComputeEngine(string name = "Unnamed")
         {
+            _name = name;
             InputData = new Queue<int>();
             OutputData = new List<int>();
+            IsHalted = false;
         }
 
         public Queue<int> InputData { get; }
         public List<int> OutputData { get; }
+        public bool IsHalted { get; private set; }
 
-        public int[] Run(int[] program, int instruction)
+        public int[] Run(int[] inputProgram, int instruction)
         {
+            var program = new int[inputProgram.Length];
+            inputProgram.CopyTo(program, 0);
+
             var preParseOpCode = program[instruction];
             var (opCode, modes) = _ParseOperationCode(preParseOpCode);
             switch (opCode)
             {
                 case 99:
+                    IsHalted = true;
                     return program;
                 case 1:
                     return Run(_Add(program, instruction, modes), instruction + 4);
@@ -84,6 +92,11 @@ namespace Codes.day7
         private static int _GetValue(int[] program, int index, int mode = 0)
         {
             return mode == 0 ? program[program[index]] : program[index];
+        }
+
+        public bool IsStarted()
+        {
+            return _savedInstruction > 0;
         }
     }
 }

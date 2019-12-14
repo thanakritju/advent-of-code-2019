@@ -84,5 +84,11 @@ namespace Codes.day7
             var program = _GetIntCodes(@"../../../../codes/day7/program.txt");
             return AmplificationCircuit.FindMaxThrust(program, new[] {0, 1, 2, 3, 4});
         }
+
+        public static double SolveDay7Part2()
+        {
+            var program = _GetIntCodes(@"../../../../codes/day7/program.txt");
+            return AmplificationCircuit.FindMaxThrust(program, new[] {5, 6, 7, 8, 9});
+        }
     }
 }

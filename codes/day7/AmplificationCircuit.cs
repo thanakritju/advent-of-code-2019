@@ -7,13 +7,18 @@ namespace Codes.day7
     {
         public static int FindMaxThrust(int[] program, int[] phaseSetting)
         {
-            var permutations = GetPermutations(phaseSetting);
+            var settings = GetPermutations(phaseSetting);
             var outputs = new List<int>();
-            foreach (var setting in permutations)
+            foreach (var setting in settings)
             {
                 var intCodeComputer = new IntCodeComputer();
-                foreach (var _ in setting) intCodeComputer.AddEngine(new ComputeEngine());
-                intCodeComputer.RunMultipleEngines(program, setting);
+
+                intCodeComputer.AddEngine(new ComputeEngine("A"));
+                intCodeComputer.AddEngine(new ComputeEngine("B"));
+                intCodeComputer.AddEngine(new ComputeEngine("C"));
+                intCodeComputer.AddEngine(new ComputeEngine("D"));
+                intCodeComputer.AddEngine(new ComputeEngine("E"));
+                intCodeComputer.RunMultipleEnginesWithFeedbackLoop(program, setting);
                 outputs.Add(intCodeComputer.GetOutputFromEngine());
             }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,17 +36,35 @@ namespace Codes.day7
             return _engines.First().Run(program, 0);
         }
 
-        public void RunMultipleEngines(int[] program, IEnumerable<int> possiblePhaseSetting)
+        public void RunMultipleEnginesWithFeedbackLoop(int[] program, IEnumerable<int> phaseSetting)
         {
-            _AddPhaseSetting(possiblePhaseSetting);
+            _AddPhaseSetting(phaseSetting);
 
             const int inputEngine = 0;
             _engines[0].AddInput(inputEngine);
 
             for (var i = 0; i < _engines.Count; i++)
             {
-                _engines[i].Run(program, 0);
-                if (i < _engines.Count - 1) _engines[i + 1].AddInput(_engines[i].GetOutput());
+                if (_engines[i].IsHalted) break;
+                try
+                {
+                    if (_engines[i].IsStarted()) _engines[i].Continue();
+                    else _engines[i].Run(program, 0);
+                }
+                catch (InvalidOperationException)
+                {
+                    // Ignore
+                }
+
+                if (i < _engines.Count - 1)
+                {
+                    _engines[i + 1].AddInput(_engines[i].GetOutput());
+                }
+                else
+                {
+                    _engines[0].AddInput(_engines[i].GetOutput());
+                    i = -1;
+                }
             }
         }
 
