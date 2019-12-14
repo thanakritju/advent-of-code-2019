@@ -39,15 +39,23 @@ namespace Codes.day9
 
         private long[] _Print(long[] program, int index, List<int> modes)
         {
-            OutputData.Add(_GetValue(program, index + 1, modes[0]));
+            OutputData.Enqueue(_GetValue(program, index + 1, modes[0]));
             return program;
         }
 
         private long[] _Read(long[] program, int index, List<int> modes)
         {
-            var valueToSet = Convert.ToInt32(InputData.Dequeue());
-            _SetValue(program, index + 1, modes[0], valueToSet);
-            return program;
+            try{
+                var valueToSet = Convert.ToInt32(InputData.Dequeue());
+                _SetValue(program, index + 1, modes[0], valueToSet);
+                return program;
+            }
+            catch (InvalidOperationException)
+            {
+                _savedProgram = program;
+                _savedInstruction = index;
+                throw new InvalidOperationException("There is no input, waiting for input");
+            }
         }
 
         private long[] _Add(long[] program, int index, List<int> modes)

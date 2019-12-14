@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,16 +7,18 @@ namespace Codes.day9
     public partial class IntCodeComputer
     {
         private long _relativeBase;
+        private long[] _savedProgram;
+        private int _savedInstruction;
 
         public IntCodeComputer()
         {
             InputData = new Queue<int>();
-            OutputData = new List<long>();
+            OutputData = new Queue<long>();
             _relativeBase = 0;
         }
 
         public Queue<int> InputData { get; }
-        public List<long> OutputData { get; }
+        public Queue<long> OutputData { get; }
 
         public long[] Run(long[] program, int arg1, int arg2)
         {
@@ -24,14 +27,42 @@ namespace Codes.day9
             return _Run(program, 0);
         }
 
-        public long[] Run(long[] program)
+        public void Run(long[] program)
         {
-            return _Run(program, 0);
+            try
+            {
+                _Run(program, 0);
+            }
+            catch (InvalidOperationException)
+            {
+                // Ignore
+            }
         }
 
         public long[] Run(int[] program)
         {
             return _Run(program.Select(item => (long) item).ToArray(), 0);
+        }
+
+        public void AddInput(int input)
+        {
+            InputData.Enqueue(input);
+        }
+        
+        public long GetOutput()
+        {
+            return OutputData.Dequeue();
+        }
+        public void Continue()
+        {
+            try
+            {
+                _Run(_savedProgram, _savedInstruction);
+            }
+            catch (InvalidOperationException)
+            {
+                //Ignore
+            }
         }
     }
 }

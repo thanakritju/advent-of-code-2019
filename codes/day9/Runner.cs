@@ -6,7 +6,7 @@ namespace Codes.day9
 {
     public class Runner
     {
-        private static long[] _GetIntCodes(string path)
+        public static long[] GetIntCodes(string path)
         {
             var fileContent = File.ReadAllText(path);
 
@@ -22,7 +22,7 @@ namespace Codes.day9
 
         public static double SolveDay2Part1(int arg1, int arg2)
         {
-            var program = _GetIntCodes(@"../../../../codes/day2/program.txt");
+            var program = GetIntCodes(@"../../../../codes/day2/program.txt");
             var computer = new IntCodeComputer();
 
             var outputProgram = computer.Run(program, arg1, arg2);
@@ -37,7 +37,7 @@ namespace Codes.day9
                 try
                 {
                     var computer = new IntCodeComputer();
-                    var output = computer.Run(_GetIntCodes(@"../../../../codes/day2/program.txt"), i, j);
+                    var output = computer.Run(GetIntCodes(@"../../../../codes/day2/program.txt"), i, j);
                     if (output[0] == target) return 100 * i + j;
                 }
                 catch (Exception)
@@ -50,7 +50,7 @@ namespace Codes.day9
         public static IntCodeComputer SolveDay5Part1(int input)
         {
             var computer = new IntCodeComputer();
-            var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
+            var program = GetIntCodes(@"../../../../codes/day5/program.txt");
             computer.InputData.Enqueue(input);
             computer.Run(program);
 
@@ -60,7 +60,7 @@ namespace Codes.day9
         public static IntCodeComputer SolveDay5Part2(in int input)
         {
             var computer = new IntCodeComputer();
-            var program = _GetIntCodes(@"../../../../codes/day5/program.txt");
+            var program = GetIntCodes(@"../../../../codes/day5/program.txt");
             computer.InputData.Enqueue(input);
             computer.Run(program);
 
@@ -70,7 +70,7 @@ namespace Codes.day9
         public static long SolveDay9Part1(in int input)
         {
             var computer = new IntCodeComputer();
-            var program = _GetIntCodes(@"../../../../codes/day9/program.txt");
+            var program = GetIntCodes(@"../../../../codes/day9/program.txt");
             computer.InputData.Enqueue(input);
             computer.Run(program);
 
