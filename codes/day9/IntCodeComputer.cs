@@ -7,8 +7,8 @@ namespace Codes.day9
     public partial class IntCodeComputer
     {
         private long _relativeBase;
-        private long[] _savedProgram;
         private int _savedInstruction;
+        private long[] _savedProgram;
 
         public IntCodeComputer()
         {
@@ -50,11 +50,12 @@ namespace Codes.day9
         {
             InputData.Enqueue(input);
         }
-        
+
         public long GetOutput()
         {
             return OutputData.Dequeue();
         }
+
         public void Continue()
         {
             try

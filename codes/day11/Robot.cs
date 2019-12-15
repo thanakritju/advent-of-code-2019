@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 namespace Codes.day11
 {
@@ -8,14 +7,14 @@ namespace Codes.day11
         North = 0,
         West = 1,
         South = 2,
-        East = 3,
+        East = 3
     }
-    
+
     public class Robot
     {
+        public int Direction;
         public int X;
         public int Y;
-        public int Direction;
 
         public Robot(int x = 0, int y = 0, int direction = (int) Directions.North)
         {
@@ -52,7 +51,8 @@ namespace Codes.day11
                 Direction += 3;
                 Direction %= 4;
                 Forward();
-            } else if (i == 0) // Left
+            }
+            else if (i == 0) // Left
             {
                 Direction += 1;
                 Direction %= 4;

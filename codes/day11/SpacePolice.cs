@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Codes.day9;
-using Runner = Codes.day10.Runner;
 
 namespace Codes.day11
 {
     public class SpacePolice
     {
+        public IntCodeComputer Computer;
         public List<Node> Nodes;
         public Robot Robot;
-        public IntCodeComputer Computer;
-        
+
         public SpacePolice(IntCodeComputer computer)
         {
             Computer = computer;
@@ -19,6 +19,31 @@ namespace Codes.day11
         }
 
         public int Run()
+        {
+            Core();
+            return Nodes.Count;
+        }
+
+        public int[,] DisplayNode()
+        {
+            var maxX = Nodes.Max(n => n.X);
+            var maxY = Nodes.Max(n => n.Y);
+            var minX = Nodes.Min(n => n.X);
+            var minY = Nodes.Min(n => n.Y);
+
+            var arr = new int[maxY - minY + 1, maxX - minX + 1];
+            foreach (var node in Nodes) arr[-node.Y, node.X + minX] = node.IsWhite ? 1 : 0;
+
+            for (var i = 0; i < arr.GetLength(0); i++)
+            {
+                for (var j = 0; j < arr.GetLength(1); j++) Console.Out.Write(arr[i, j] == 1 ? "#" : ".");
+                Console.Out.Write("\n");
+            }
+
+            return arr;
+        }
+
+        public void Core()
         {
             while (!Computer.IsHalted)
             {
@@ -32,17 +57,15 @@ namespace Codes.day11
 
                 Computer.AddInput(node.IsWhite ? 1 : 0);
                 Computer.Continue();
-                
+
                 var colorToPaint = (int) Computer.GetOutput();
                 node.IsWhite = colorToPaint == 1;
-                
+
                 var directionToTurn = (int) Computer.GetOutput();
                 Robot.Move(directionToTurn);
 
                 node.Visited = true;
             }
-
-            return Nodes.Count;
         }
 
         public static Node FindNode(List<Node> nodes, Node node)

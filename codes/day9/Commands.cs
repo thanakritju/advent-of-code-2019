@@ -45,7 +45,8 @@ namespace Codes.day9
 
         private long[] _Read(long[] program, int index, List<int> modes)
         {
-            try{
+            try
+            {
                 var valueToSet = Convert.ToInt32(InputData.Dequeue());
                 _SetValue(program, index + 1, modes[0], valueToSet);
                 return program;
