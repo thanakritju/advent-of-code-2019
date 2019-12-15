@@ -15,10 +15,12 @@ namespace Codes.day9
             InputData = new Queue<int>();
             OutputData = new Queue<long>();
             _relativeBase = 0;
+            IsHalted = false;
         }
 
         public Queue<int> InputData { get; }
         public Queue<long> OutputData { get; }
+        public bool IsHalted { get; private set; }
 
         public long[] Run(long[] program, int arg1, int arg2)
         {

@@ -19,6 +19,7 @@ namespace Codes.day9
                     switch (opCode)
                     {
                         case 99:
+                            IsHalted = true;
                             return program;
                         case 1:
                             program = _Add(program, index, modes);

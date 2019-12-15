@@ -1,5 +1,7 @@
 using System;
+using Codes.day11;
 using Codes.day9;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using NUnit.Framework;
 
 namespace Tests.day11
@@ -17,13 +19,13 @@ namespace Tests.day11
         }
 
         [Test]
-        public void TestSimpleRun()
+        public void TestDay11Part1()
         {
-            _computer.AddInput(0);
-            _computer.AddInput(1);
-            _computer.Continue();
+            var spacePolice = new SpacePolice(_computer);
             
-            Assert.AreEqual(1, _computer.OutputData);
+            var output = spacePolice.Run();
+            
+            Assert.AreEqual(1709, output);
         }
     }
 }
